@@ -52,7 +52,7 @@ pipeline {
             stage('MVN SONARQUBE') {
       steps {
         sh 'docker run -d --name sonarqube -p 9000:9000 sonarqube'
-        sh 'docker run -e SONAR_HOST_URL=http://localhost:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
+        sh 'docker run -e SONAR_HOST_URL=http://192.168.1.5/:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
       }
     }
 
@@ -71,3 +71,49 @@ pipeline {
 
 
 
+
+// pipeline {
+//   agent any
+//   stages {
+//     stage('Clone') {
+//       steps {
+//         git branch: 'master', url: '<repository-url>'
+//       }
+//     }
+//     stage('Build') {
+//       steps {
+//         sh 'docker build -t myapp .'
+//       }
+//     }
+    // stage('Test') {
+    //   steps {
+    //     sh 'docker run myapp mvn test'
+    //   }
+    //   post {
+    //     always {
+    //       junit 'target/surefire-reports/*.xml'
+    //     }
+    //   }
+    // }
+    // stage('Analyze') {
+    //   steps {
+    //     sh 'docker run -d --name sonarqube -p 9000:9000 sonarqube'
+    //     sh 'docker run -e SONAR_HOST_URL=http://localhost:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
+    //   }
+    // }
+//     stage('Publish') {
+//       steps {
+//         sh 'docker run -d -p 8081:8081 --name nexus sonatype/nexus3'
+//         sh 'docker build -t myapp .'
+//         sh 'docker tag myapp localhost:8081/myapp'
+//         sh 'docker push localhost:8081/myapp'
+//       }
+//     }
+//   }
+//   post {
+//     always {
+//       sh 'docker stop sonarqube'
+//       sh 'docker stop nexus'
+//     }
+//   }
+// }
