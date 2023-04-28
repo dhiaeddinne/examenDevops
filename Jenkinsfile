@@ -51,14 +51,14 @@ pipeline {
 
             stage('MVN SONARQUBE') {
       steps {
-        sh 'sudo docker run -d --name sonarqube -p 9000:9000 sonarqube'
-        sh 'sudo docker run -e SONAR_HOST_URL=http://192.168.1.5/:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
+        sh 'sudo -S docker run -d --name sonarqube -p 9000:9000 sonarqube'
+        sh 'sudo -S docker run -e SONAR_HOST_URL=http://192.168.1.5/:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
       }
     }
 
         stage('Test') {
             steps {
-                sh 'sudo docker run myapp mvn test'
+                sh 'sudo -S docker run myapp mvn test'
             }
             post {
                 always {
