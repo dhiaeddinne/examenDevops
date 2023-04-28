@@ -48,5 +48,23 @@ pipeline {
                 sh 'mvn install'
             }
         }
+
+            stage('MVN SONARQUBE') {
+      steps {
+        sh 'docker run -d --name sonarqube -p 9000:9000 sonarqube'
+        sh 'docker run -e SONAR_HOST_URL=http://192.168.1.5/:9000 -v $(pwd):/usr/src sonarsource/sonar-scanner'
+      }
+    }
+
+        stage('Test') {
+            steps {
+                sh 'docker run myapp mvn test'
+            }
+            post {
+                always {
+                junit 'target/surefire-reports/*.xml'
+                }
+            }
+    }
     }
 }
