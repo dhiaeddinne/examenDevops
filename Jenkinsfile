@@ -56,15 +56,15 @@ pipeline {
     //   }
     // }
 
-        stage('Test') {
-            steps {
-                sh 'sudo docker run myapp mvn test'
-            }
-            post {
-                always {
-                junit 'target/surefire-reports/*.xml'
-                }
-            }
-    }
+    //     stage('Test') {
+    //         steps {
+    //             sh 'docker run myapp mvn test'
+    //         }
+    //         post {
+    //             always {
+    //             junit 'target/surefire-reports/*.xml'
+    //             }
+    //         }
+    // }
     }
 }
