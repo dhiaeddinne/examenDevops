@@ -58,7 +58,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker run myapp mvn test'
+                sh 'sudo docker run myapp mvn test'
             }
             post {
                 always {
